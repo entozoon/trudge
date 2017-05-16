@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "browser-sync start --server --open local --files '**/*.html, dist/**' & babel src --out-file dist/app.js --presets=es2015,babili --watch",
-    "start-without-sync": "opn index.html & babel src --out-file dist/app.js --presets=es2015 --watch"
+    "debug": "opn index.html & babel src --out-file dist/app.js --presets=es2015 --watch"
   },
   "repository": {
     "type": "git",
