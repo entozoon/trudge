@@ -3,7 +3,8 @@
 //
 
 let game,
-  graphics;
+  graphics,
+  things = [];
 
 window.onload = () => { // (after images)
   game = new Phaser.Game({
@@ -28,9 +29,15 @@ const create = () => {
   game.scale.scaleMode = Phaser.ScaleManager.RESIZE;
 	game.scale.parentIsWindow = true;
 	graphics = game.add.graphics(0, 0);
+
+  things.push(new Thing());
 }
 const update = () => {
+  things.forEach(thing => {
+    thing.update();
+  });
 }
+
 const render = () => {
 	// Clear
 	graphics.clear();
@@ -45,4 +52,7 @@ const render = () => {
 	);
 	graphics.endFill();
 
+  things.forEach(thing => {
+    thing.render();
+  });
 }
