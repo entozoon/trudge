@@ -1,10 +1,9 @@
 //
-// Compiles into /dist as vanilla Javascript (es2015)
+// Concatenates all /src files into /build/app.js as compiles to vanilla Javascript (es2015)
 //
-
 let game,
   graphics,
-  things = [];
+  creatures = [];
 
 window.onload = () => { // (after images)
   game = new Phaser.Game({
@@ -21,21 +20,42 @@ window.onload = () => { // (after images)
   });
 }
 
-
 const preload = () => {
   // Images..
+  game.load.image('heroSprite', 'sprites/hero.png');
+  game.load.image('creatureSprite', 'sprites/creature.png');
 }
+
 const create = () => {
   game.scale.scaleMode = Phaser.ScaleManager.RESIZE;
 	game.scale.parentIsWindow = true;
 	graphics = game.add.graphics(0, 0);
 
-  things.push(new Thing());
+  // Creatures
+  creatures.push(new Creature({
+    x: 100,
+    y: 100
+  }));
+
+  creatures.push(new Creature({
+    x: 100,
+    y: 200
+  }));
+
+  creatures.push(new Creature({
+    sprite: game.add.sprite(41, 42, 'heroSprite'),
+    x: 100,
+    y: 300
+  }));
 }
+
 const update = () => {
-  things.forEach(thing => {
+  // Creatures
+  creatures.forEach(thing => {
     thing.update();
   });
+
+  //game.physics.arcade.collide(sprite1, sprite2, collisionHandler, null, this);
 }
 
 const render = () => {
@@ -43,7 +63,7 @@ const render = () => {
 	graphics.clear();
 
 	// Bg
-	graphics.beginFill(0xFFAA00, 1);
+	graphics.beginFill(0xFFEEFF, 1);
 	graphics.drawRect(
 		0,
 		0,
@@ -52,7 +72,8 @@ const render = () => {
 	);
 	graphics.endFill();
 
-  things.forEach(thing => {
+  // Creatures
+  creatures.forEach(thing => {
     thing.render();
   });
 }
