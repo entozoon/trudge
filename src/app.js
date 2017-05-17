@@ -41,7 +41,7 @@ const create = () => {
   creatures.push(new Creature({
     x: 100,
     y: 100,
-    velocity: { x: 100, y: 20 }
+    velocity: { x: 100, y: 10 }
   }));
 
   creatures.push(new Creature({
@@ -59,7 +59,7 @@ const create = () => {
   creatures.push(new Creature({
     x: 400,
     y: 100,
-    velocity: { x: -80, y: 10 }
+    velocity: { x: -100, y: 10 }
   }));
 /*
   creatures.push(new Creature({

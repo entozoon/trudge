@@ -8,7 +8,7 @@ class Creature {
 
     // Physics
     game.physics.arcade.enableBody(this.sprite);
-  	//this.sprite.body.collideWorldBounds = true; // I'm not convinced the AoE is right on load
+  	//this.sprite.body.collideWorldBounds = true; // I'm _very_ not convinced the AoE is right on load
     physicalGroup.add(this.sprite);
 
     // Bounding box (width, height, x, y offset)
@@ -27,8 +27,14 @@ class Creature {
     return this.sprite;
   }
 
-  collisionHandler(a, b) {
+  processCallback(a, b) {
+    // When two sprites collide, return false to skip collision entirely
+    return true;
+  }
+
+  collideCallback(a, b) {
     a.tint = 0xff0000;
+    b.tint = 0x0000ff;
 
     // if (!a.body.touching.none) {
     //   console.log(a.body.touching);
@@ -37,7 +43,7 @@ class Creature {
 
   update() {
     //game.physics.arcade.collide(player, platforms, hitPlatform(), isPlatformSolid(), this);
-    game.physics.arcade.collide(this.sprite, physicalGroup, this.collisionHandler, null, this);
+    game.physics.arcade.collide(this.sprite, physicalGroup, this.collideCallback, this.processCallback, this);
     // .overlap is also a thing. Detects overlap without causing a collision as such
   }
 
