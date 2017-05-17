@@ -13,14 +13,25 @@ class Creature {
     this.sprite.body.immovable = false;
     this.sprite.x = (options.x ? options.x : 99);
     this.sprite.y = (options.y ? options.y : 99);
-    this.sprite.body.velocity.x = 100;
+    this.sprite.body.velocity = (options.velocity ? options.velocity : null);
+
+    physicalObjects.push(this.sprite);
   }
 
   getSprite() {
     return this.sprite;
   }
 
+  collisionHandler(object1, object2) {
+
+    //this.sprite.body.velocity = { x: 0, y: 0 }
+    object1.body.velocity = { x: 0, y: 0 }
+    object1.tint = 0xff0000;
+  }
+
   update() {
+    // Collisions only occur like, one way
+    game.physics.arcade.collide(this.sprite, physicalObjects, this.collisionHandler, null, this);
   }
 
   render() {

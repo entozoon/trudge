@@ -3,7 +3,8 @@
 //
 let game,
   graphics,
-  creatures = [];
+  creatures = [],
+  physicalObjects = [];
 
 window.onload = () => { // (after images)
   game = new Phaser.Game({
@@ -34,18 +35,21 @@ const create = () => {
   // Creatures
   creatures.push(new Creature({
     x: 100,
-    y: 100
+    y: 100,
+    velocity: { x: 100, y: 0 }
   }));
 
   creatures.push(new Creature({
-    x: 100,
-    y: 200
+    x: 200,
+    y: 100,
+    velocity: { x: 0, y: 0 }
   }));
 
   creatures.push(new Creature({
     sprite: game.add.sprite(41, 42, 'heroSprite'),
-    x: 100,
-    y: 300
+    x: 300,
+    y: 100,
+    velocity: { x: 0, y: 0 }
   }));
 }
 
@@ -54,8 +58,6 @@ const update = () => {
   creatures.forEach(thing => {
     thing.update();
   });
-
-  //game.physics.arcade.collide(sprite1, sprite2, collisionHandler, null, this);
 }
 
 const render = () => {
@@ -63,7 +65,7 @@ const render = () => {
 	graphics.clear();
 
 	// Bg
-	graphics.beginFill(0xFFEEFF, 1);
+	graphics.beginFill(0xEEEEEE, 1);
 	graphics.drawRect(
 		0,
 		0,
