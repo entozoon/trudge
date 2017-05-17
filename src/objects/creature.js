@@ -14,6 +14,8 @@ class Creature {
     // Bounding box (width, height, x, y offset)
     this.sprite.body.setSize(24, 26, 11, 7);
     this.sprite.body.immovable = false;
+    // Circle collision is not supported with tile maps! so maybe avoid that for now
+    //this.sprite.body.setCircle(20, 0, 0); // r, x, y
 
     // Position
     this.sprite.x = (options.x ? options.x : 99);
@@ -26,13 +28,11 @@ class Creature {
   }
 
   collisionHandler(a, b) {
-    //this.sprite.body.velocity = { x: 0, y: 0 }
-    a.body.velocity = { x: 0, y: 0 }
     a.tint = 0xff0000;
 
-    if (!a.body.touching.none) {
-      console.log(a.body.touching);
-    }
+    // if (!a.body.touching.none) {
+    //   console.log(a.body.touching);
+    // }
   }
 
   update() {

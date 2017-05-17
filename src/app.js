@@ -41,7 +41,13 @@ const create = () => {
   creatures.push(new Creature({
     x: 100,
     y: 100,
-    velocity: { x: 80, y: 0 }
+    velocity: { x: 100, y: 20 }
+  }));
+
+  creatures.push(new Creature({
+    x: 200,
+    y: 100,
+    velocity: { x: 0, y: 0 }
   }));
 
   creatures.push(new Creature({
@@ -51,12 +57,18 @@ const create = () => {
   }));
 
   creatures.push(new Creature({
-    sprite: game.add.sprite(41, 42, 'heroSprite'),
-    x: 500,
+    x: 400,
     y: 100,
-    velocity: { x: -100, y: 0 }
+    velocity: { x: -80, y: 10 }
   }));
-
+/*
+  creatures.push(new Creature({
+    sprite: game.add.sprite(41, 42, 'heroSprite'),
+    x: 700,
+    y: 100,
+    velocity: { x: -50, y: 0 }
+  }));
+*/
 }
 
 const update = () => {
