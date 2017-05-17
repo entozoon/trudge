@@ -4,7 +4,7 @@
 let game,
   graphics,
   creatures = [],
-  physicalObjects = [];
+  physicalGroup;
 
 window.onload = () => { // (after images)
   game = new Phaser.Game({
@@ -32,11 +32,16 @@ const create = () => {
 	game.scale.parentIsWindow = true;
 	graphics = game.add.graphics(0, 0);
 
+  // NB: Only sprites can be made part of the physics system, apparently!
+  physicalGroup = game.add.group();
+  physicalGroup.enableBody = true;
+  physicalGroup.physicsBodyType = Phaser.Physics.ARCADE;
+
   // Creatures
   creatures.push(new Creature({
     x: 100,
     y: 100,
-    velocity: { x: 0, y: 0 }
+    velocity: { x: 80, y: 0 }
   }));
 
   creatures.push(new Creature({
@@ -49,8 +54,9 @@ const create = () => {
     sprite: game.add.sprite(41, 42, 'heroSprite'),
     x: 500,
     y: 100,
-    velocity: { x: 0, y: 0 }
+    velocity: { x: -100, y: 0 }
   }));
+
 }
 
 const update = () => {
