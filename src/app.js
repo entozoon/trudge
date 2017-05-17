@@ -36,18 +36,18 @@ const create = () => {
   creatures.push(new Creature({
     x: 100,
     y: 100,
-    velocity: { x: 100, y: 0 }
+    velocity: { x: 0, y: 0 }
   }));
 
   creatures.push(new Creature({
-    x: 200,
+    x: 300,
     y: 100,
     velocity: { x: 0, y: 0 }
   }));
 
   creatures.push(new Creature({
     sprite: game.add.sprite(41, 42, 'heroSprite'),
-    x: 300,
+    x: 500,
     y: 100,
     velocity: { x: 0, y: 0 }
   }));

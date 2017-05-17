@@ -3,19 +3,22 @@ class Creature {
     // Create empty options just in case
     options = (options ? options : {});
 
+    // Sprite
     this.sprite = (options.sprite ? options.sprite : game.add.sprite(41, 42, 'creatureSprite'));
-    console.log(this.sprite.body);
 
+    // Physics
     game.physics.arcade.enableBody(this.sprite);
+  	//this.sprite.body.collideWorldBounds = true;
+    physicalObjects.push(this.sprite);
 
     // Bounding box (width, height, x, y offset)
     this.sprite.body.setSize(24, 26, 11, 7);
     this.sprite.body.immovable = false;
+
+    // Position
     this.sprite.x = (options.x ? options.x : 99);
     this.sprite.y = (options.y ? options.y : 99);
     this.sprite.body.velocity = (options.velocity ? options.velocity : null);
-
-    physicalObjects.push(this.sprite);
   }
 
   getSprite() {
