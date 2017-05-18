@@ -68,14 +68,13 @@ const create = () => {
     })
   );
 
-  creatures.push(
-    new Creature({
-      sprite: game.add.sprite(41, 42, 'heroSprite'),
-      x: 500,
-      y: 100,
-      velocity: { x: -50, y: 0 }
-    })
-  );
+  let hero = new Creature({
+    sprite: game.add.sprite(41, 42, 'heroSprite'),
+    x: 500,
+    y: 100
+  });
+
+  creatures.push(hero);
 };
 
 const update = () => {

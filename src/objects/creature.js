@@ -28,13 +28,26 @@ class Creature {
     // Position
     this.sprite.x = options.x ? options.x : 99;
     this.sprite.y = options.y ? options.y : 99;
-    this.sprite.body.velocity = options.velocity ? options.velocity : null;
+    this.sprite.body.velocity = options.velocity ? options.velocity : { x: 0, y: 0 };
 
     // Pass 'this' context to sprite for referencing when handling collisions
     this.sprite.mother = this;
 
     // Attributes
     this.sprite.setHealth(100);
+
+    // Keyboard.. (abstract this out to hero-only)
+    //this.keyTest = game.input.keyboard.addKey(Phaser.Keyboard.ONE);
+    //
+    ////http://www.html5gamedevs.com/topic/7256-generic-key-input/
+    // game.input.keyboard.onDownCallback(() => {
+    //   console.log('hey?');
+    //   console.log(game.input.keyboard.event.keyCode);
+    // });
+    // maybe shift into update. ..??
+    game.input.onDown.add(function() {
+      console.log('input captured');
+    });
   }
 
   getSprite() {
