@@ -3,13 +3,21 @@ class Creature {
     // Create empty options just in case
     options = options ? options : {};
 
-    // Sprite
     this.sprite = options.sprite ? options.sprite : game.add.sprite(41, 42, 'creatureSprite');
 
     // Physics
     game.physics.arcade.enableBody(this.sprite);
     //this.sprite.body.collideWorldBounds = true; // I'm _very_ not convinced the AoE is right on load
     physicalGroup.add(this.sprite);
+
+    //this.sprite = physicalGroup.create(50, 100, 'creatureSprite', 1);
+
+    // ID
+    this.id = creatures.length;
+
+    // Physics
+    game.physics.arcade.enableBody(this.sprite);
+    //this.sprite.body.collideWorldBounds = true; // I'm _very_ not convinced the AoE is right on load
 
     // Bounding box (width, height, x, y offset)
     this.sprite.body.setSize(24, 26, 11, 7);
@@ -26,7 +34,7 @@ class Creature {
     this.sprite.mother = this;
 
     // Attributes
-    this.hp = 100;
+    this.sprite.setHealth(100);
   }
 
   getSprite() {
@@ -38,20 +46,32 @@ class Creature {
     return true;
   }
 
+  destroy() {
+    // Destroy physical object
+    physicalGroup.remove(this.sprite, true); // true also runs this.sprite.destroy()
+
+    creatures = creatures.filter((creature, i) => {
+      return creature.id == this.id;
+    });
+  }
+
   wasTouched() {
-    if (this.hp <= 0) {
-      this.sprite.tint = 0x000000;
+    this.sprite.damage(50);
+    console.log('HP: ' + this.sprite.health);
+
+    if (this.sprite.health <= 0) {
+      // Let it skip a beat before destroying because (and this took me AGES to figure out)..
+      // The collisions will still be running for the rest of the group on removed objects otherwise.
+      this.dying = true;
       return;
     }
-    this.sprite.tint = 0xff0000;
-    this.hp--;
   }
 
   collideCallback(a, b) {
-    // a (this) and b aren't reliable in that it can't distinguish which hit which.
+    // a (this) and b sprites aren't reliable in that it can't distinguish which hit which.
     // So just be dead ambivolent about it
-    //a.tint = 0xff0000;
-    //b.tint = 0x000000;
+    // a.tint = 0xff0000;
+    // b.tint = 0x000000;
     // if (!a.body.touching.none) {
     //   console.log(a.body.touching);
     // }
@@ -66,7 +86,10 @@ class Creature {
   }
 
   update() {
-    //game.physics.arcade.collide(player, platforms, hitPlatform(), isPlatformSolid(), this);
+    if (this.dying) {
+      this.destroy();
+    }
+
     game.physics.arcade.collide(
       this.sprite,
       physicalGroup,

@@ -40,7 +40,7 @@ const create = () => {
     new Creature({
       x: 100,
       y: 100,
-      velocity: { x: 100, y: 10 }
+      velocity: { x: 100, y: 20 }
     })
   );
 
@@ -80,8 +80,9 @@ const create = () => {
 
 const update = () => {
   // Creatures
-  creatures.forEach(thing => {
-    thing.update();
+  creatures.forEach(creature => {
+    //console.log(creature.id + ' of ' + creatures.length);
+    creature.update();
   });
 };
 
@@ -95,7 +96,7 @@ const render = () => {
   graphics.endFill();
 
   // Creatures
-  creatures.forEach(thing => {
-    thing.render();
+  creatures.forEach(creature => {
+    creature.render();
   });
 };
