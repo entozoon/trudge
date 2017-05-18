@@ -22,8 +22,11 @@ class Creature {
     this.sprite.y = options.y ? options.y : 99;
     this.sprite.body.velocity = options.velocity ? options.velocity : null;
 
-    // Pass 'this' context to sprite for use with wasTouched
+    // Pass 'this' context to sprite for referencing when handling collisions
     this.sprite.mother = this;
+
+    // Attributes
+    this.hp = 100;
   }
 
   getSprite() {
@@ -36,7 +39,12 @@ class Creature {
   }
 
   wasTouched() {
-    this.sprite.tint = 0x440000;
+    if (this.hp <= 0) {
+      this.sprite.tint = 0x000000;
+      return;
+    }
+    this.sprite.tint = 0xff0000;
+    this.hp--;
   }
 
   collideCallback(a, b) {
@@ -47,10 +55,9 @@ class Creature {
     // if (!a.body.touching.none) {
     //   console.log(a.body.touching);
     // }
-    //
 
+    // Touch each other. Feels good. Harder.
     if (a.mother) {
-      //console.log(a.mother);
       a.mother.wasTouched();
     }
     if (b.mother) {
