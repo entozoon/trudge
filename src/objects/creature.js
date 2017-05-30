@@ -38,15 +38,15 @@ class Creature {
 
     // Keyboard.. (abstract this out to hero-only)
     //this.keyTest = game.input.keyboard.addKey(Phaser.Keyboard.ONE);
-    //
-    ////http://www.html5gamedevs.com/topic/7256-generic-key-input/
-    // game.input.keyboard.onDownCallback(() => {
-    //   console.log('hey?');
-    //   console.log(game.input.keyboard.event.keyCode);
-    // });
+
+    //http://www.html5gamedevs.com/topic/7256-generic-key-input/
+    game.input.keyboard.onDownCallback(() => {
+      console.log('input captured (keyboard?)');
+      console.log(game.input.keyboard.event.keyCode);
+    });
     // maybe shift into update. ..??
     game.input.onDown.add(function() {
-      console.log('input captured');
+      console.log('input captured (click?)');
     });
   }
 
