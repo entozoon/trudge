@@ -1,9 +1,18 @@
 class Creature {
   constructor(options) {
-    // Create empty options just in case
-    options = options ? options : {};
-
-    this.sprite = options.sprite ? options.sprite : game.add.sprite(41, 42, 'creatureSprite');
+    // Take options as an object with default values and bosh into 'this' for brevity
+    options = {
+      x: options.x ? options.x : 100,
+      y: options.y ? options.y : 100,
+      acceleration: options.acceleration ? options.acceleration : 0.7,
+      velocityMax: options.velocityMax ? options.velocityMax : 700,
+      frictionMovement: options.frictionMovement ? options.frictionMovement : 25,
+      velocity: options.velocity ? options.velocity : { x: 0, y: 0 },
+      sprite: options.sprite ? options.sprite : game.add.sprite(41, 42, 'creatureSprite')
+    };
+    for (var key in options) {
+      this[key] = options[key];
+    }
 
     // Physics
     game.physics.arcade.enableBody(this.sprite);
@@ -19,16 +28,17 @@ class Creature {
     game.physics.arcade.enableBody(this.sprite);
     //this.sprite.body.collideWorldBounds = true; // I'm _very_ not convinced the AoE is right on load
 
-    // Bounding box (width, height, x, y offset)
-    this.sprite.body.setSize(24, 26, 11, 7);
+    // Bounding box
+    //this.sprite.body.setSize(24, 26, 11, 7); // w, h, x, y RECTANGLE COLLISION
+    // Circle collision is not supported with tile maps! so avoid it for terrain
+    this.sprite.body.setCircle(20, 0, 0); // r, x, y CIRCLE COLLISION
+
     this.sprite.body.immovable = false;
-    // Circle collision is not supported with tile maps! so maybe avoid that for now
-    //this.sprite.body.setCircle(20, 0, 0); // r, x, y
 
     // Position
-    this.sprite.x = options.x ? options.x : 99;
-    this.sprite.y = options.y ? options.y : 99;
-    this.sprite.body.velocity = options.velocity ? options.velocity : { x: 0, y: 0 };
+    this.sprite.x = this.x;
+    this.sprite.y = this.y;
+    this.sprite.body.velocity = options.velocity;
 
     // Pass 'this' context to sprite for referencing when handling collisions
     this.sprite.mother = this;
@@ -69,7 +79,7 @@ class Creature {
   }
 
   wasTouched() {
-    this.sprite.damage(50);
+    this.sprite.damage(1);
     console.log('HP: ' + this.sprite.health);
 
     if (this.sprite.health <= 0) {
@@ -98,6 +108,24 @@ class Creature {
     }
   }
 
+  velocityLimit() {
+    this.sprite.body.velocity.y = constrain(
+      this.sprite.body.velocity.y,
+      -this.velocityMax,
+      this.velocityMax
+    );
+    this.sprite.body.velocity.x = constrain(
+      this.sprite.body.velocity.x,
+      -this.velocityMax,
+      this.velocityMax
+    );
+  }
+
+  friction() {
+    this.sprite.body.velocity.y -= Math.sign(this.sprite.body.velocity.y) * this.frictionMovement;
+    this.sprite.body.velocity.x -= Math.sign(this.sprite.body.velocity.x) * this.frictionMovement;
+  }
+
   update() {
     if (this.dying) {
       this.destroy();
@@ -111,6 +139,9 @@ class Creature {
       this
     );
     // .overlap is also a thing. Detects overlap without causing a collision as such
+
+    this.velocityLimit();
+    this.friction();
   }
 
   render() {
