@@ -4,10 +4,10 @@ class Hero extends Creature {
 
     // Take options as an object with default values and bosh into 'this' for brevity
     options = {
-      acceleration: options.acceleration ? options.acceleration : 0.2,
-      velocityMax: options.velocityMax ? options.velocityMax : 400
+      acceleration: options.acceleration ? options.acceleration : 0.7,
+      velocityMax: options.velocityMax ? options.velocityMax : 700,
+      frictionMovement: options.frictionMovement ? options.frictionMovement : 25
     };
-
     for (var key in options) {
       this[key] = options[key];
     }
@@ -37,11 +37,8 @@ class Hero extends Creature {
   }
 
   friction() {
-    console.log('Need to write this in a clevererer way, using Math.sign and stuff');
-    this.sprite.body.velocity.y =
-      this.sprite.body.velocity.y > 0
-        ? this.sprite.body.velocity.y - 2
-        : this.sprite.body.velocity.y;
+    this.sprite.body.velocity.y -= Math.sign(this.sprite.body.velocity.y) * this.frictionMovement;
+    this.sprite.body.velocity.x -= Math.sign(this.sprite.body.velocity.x) * this.frictionMovement;
   }
 
   update() {

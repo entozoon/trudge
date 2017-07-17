@@ -56,7 +56,7 @@ const create = () => {
     });
 
     creatures.push(hero);
-  }, 100);
+  }, 200);
 };
 
 const update = () => {
