@@ -29,9 +29,9 @@ class Creature {
     this.sprite.body.drag.setTo(this.drag, this.drag);
 
     // Bounding box
-    //this.sprite.body.setSize(24, 26, 11, 7); // w, h, x, y RECTANGLE COLLISION
-    // Circle collision is not supported with tile maps! so avoid it for terrain
-    this.sprite.body.setCircle(20); // r, x, y CIRCLE COLLISION
+    this.sprite.body.setSize(24, 26, 11, 7); // w, h, x, y RECTANGLE COLLISION
+    // Circular collision is wank in Arcade physics, so stick to square boxes like a platformer, otherwise use P2 for full physics
+    //this.sprite.body.setCircle(20); // r, x, y CIRCLE COLLISION
     this.sprite.body.bounce.setTo(0.5, 0.5);
     this.sprite.body.mass = 20;
 
