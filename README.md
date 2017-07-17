@@ -7,5 +7,5 @@
 ## Install to develop
 
 	git clone https://github.com/entozoon/trudge.git
-	yarn install
+	npm i
 	npm start

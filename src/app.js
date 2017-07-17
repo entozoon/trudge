@@ -1,7 +1,10 @@
 //
 // Concatenates all /src files into /build/app.js as compiles to vanilla Javascript (es2015)
 //
-let game, graphics, creatures = [], physicalGroup;
+let game,
+  graphics,
+  creatures = [],
+  physicalGroup;
 
 window.onload = () => {
   // (after images)
@@ -35,46 +38,25 @@ const create = () => {
   physicalGroup.enableBody = true;
   physicalGroup.physicsBodyType = Phaser.Physics.ARCADE;
 
-  // Creatures
-  creatures.push(
-    new Creature({
-      x: 100,
-      y: 100,
-      velocity: { x: 100, y: 20 }
-    })
-  );
+  // Need to think of a way to handle the ScaleManager resize better, surely a callback?
+  setTimeout(() => {
+    // Creatures
+    creatures.push(
+      new Creature({
+        x: 100,
+        y: 100,
+        velocity: { x: 100, y: 20 }
+      })
+    );
 
-  creatures.push(
-    new Creature({
-      x: 200,
-      y: 100,
-      velocity: { x: 0, y: 0 }
-    })
-  );
+    let hero = new Hero({
+      sprite: game.add.sprite(41, 42, 'heroSprite'),
+      x: game.width / 2,
+      y: game.height / 2
+    });
 
-  creatures.push(
-    new Creature({
-      x: 300,
-      y: 100,
-      velocity: { x: 0, y: 0 }
-    })
-  );
-
-  creatures.push(
-    new Creature({
-      x: 400,
-      y: 100,
-      velocity: { x: -100, y: 10 }
-    })
-  );
-
-  let hero = new Creature({
-    sprite: game.add.sprite(41, 42, 'heroSprite'),
-    x: 500,
-    y: 100
-  });
-
-  creatures.push(hero);
+    creatures.push(hero);
+  }, 100);
 };
 
 const update = () => {

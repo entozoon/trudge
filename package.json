@@ -4,9 +4,9 @@
   "description": "Undefined open world game",
   "main": "index.html",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "browser-sync start --server --open local --files \"**/*.html, build/**/*.js\" & babel src --out-file build/app.js --presets=es2015,babili --watch",
-    "start-win": "start babel src --out-file build/app.js --presets=es2015,babili --watch && browser-sync start --server --open local --files \"**/*.html, build/**/*.js\"",
+    "browser": "browser-sync start --server --open local --files \"**/*.html, build/**/*.js\"",
+    "compile-js": "babel src --out-file build/app.js --presets=es2015,babili --watch",
+    "start": "npm-run-all --parallel compile-js browser",
     "debug": "opn index.html & babel src --out-file build/app.js --presets=es2015,babili --watch"
   },
   "repository": {
@@ -29,6 +29,7 @@
     "browser-sync": "^2.18.8",
     "eslint": "^3.19.0",
     "eslint-plugin-react": "^7.0.0",
+    "npm-run-all": "^4.0.2",
     "opn-cli": "^3.1.0"
   }
 }
