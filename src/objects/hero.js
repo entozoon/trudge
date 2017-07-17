@@ -34,7 +34,6 @@ class Hero extends Creature {
     }
 
     this.velocityLimit();
-    this.friction();
   }
 
   render() {}

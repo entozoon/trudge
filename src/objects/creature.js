@@ -6,7 +6,7 @@ class Creature {
       y: options.y ? options.y : 100,
       acceleration: options.acceleration ? options.acceleration : 0.7,
       velocityMax: options.velocityMax ? options.velocityMax : 700,
-      frictionMovement: options.frictionMovement ? options.frictionMovement : 25,
+      drag: options.drag ? options.drag : 2000,
       velocity: options.velocity ? options.velocity : { x: 0, y: 0 },
       sprite: options.sprite ? options.sprite : game.add.sprite(41, 42, 'creatureSprite')
     };
@@ -27,11 +27,13 @@ class Creature {
     // Physics
     game.physics.arcade.enableBody(this.sprite);
     //this.sprite.body.collideWorldBounds = true; // I'm _very_ not convinced the AoE is right on load
+    this.sprite.body.drag.setTo(this.drag, this.drag);
 
     // Bounding box
     //this.sprite.body.setSize(24, 26, 11, 7); // w, h, x, y RECTANGLE COLLISION
     // Circle collision is not supported with tile maps! so avoid it for terrain
     this.sprite.body.setCircle(20, 0, 0); // r, x, y CIRCLE COLLISION
+    this.sprite.body.bounce.setTo(0.5, 0.5);
 
     this.sprite.body.immovable = false;
 
@@ -79,7 +81,7 @@ class Creature {
   }
 
   wasTouched() {
-    this.sprite.damage(1);
+    this.sprite.damage(0.1);
     console.log('HP: ' + this.sprite.health);
 
     if (this.sprite.health <= 0) {
@@ -121,10 +123,12 @@ class Creature {
     );
   }
 
+  /* // 'Drag' is better, and built-in
   friction() {
     this.sprite.body.velocity.y -= Math.sign(this.sprite.body.velocity.y) * this.frictionMovement;
     this.sprite.body.velocity.x -= Math.sign(this.sprite.body.velocity.x) * this.frictionMovement;
   }
+  */
 
   update() {
     if (this.dying) {
@@ -141,7 +145,7 @@ class Creature {
     // .overlap is also a thing. Detects overlap without causing a collision as such
 
     this.velocityLimit();
-    this.friction();
+    //this.friction();
   }
 
   render() {

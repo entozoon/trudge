@@ -40,49 +40,24 @@ const create = () => {
 
   // Need to think of a way to handle the ScaleManager resize better, surely a callback?
   setTimeout(() => {
-    // Creatures
-    creatures.push(
-      new Creature({
-        x: 100,
-        y: 100,
-        velocity: { x: 700, y: 20 },
-        velocityMax: 200,
-        frictionMovement: 0.5
-      })
-    );
-    creatures.push(
-      new Creature({
-        x: 100,
-        y: 200,
-        velocity: { x: 700, y: 20 },
-        velocityMax: 200,
-        frictionMovement: 0.6
-      })
-    );
-    creatures.push(
-      new Creature({
-        x: 100,
-        y: 300,
-        velocity: { x: 700, y: 20 },
-        velocityMax: 200,
-        frictionMovement: 0.7
-      })
-    );
-    creatures.push(
-      new Creature({
-        x: 100,
-        y: 400,
-        velocity: { x: 700, y: 20 },
-        velocityMax: 200,
-        frictionMovement: 0.8
-      })
-    );
-
     let hero = new Hero({
       sprite: game.add.sprite(41, 42, 'heroSprite'),
       x: game.width / 2,
       y: game.height / 2
     });
+
+    for (let x = 1; x < 15; x++) {
+      for (let y = 1; y < 6; y++) {
+        creatures.push(
+          new Creature({
+            x: x * 50,
+            y: y * 50,
+            velocity: { x: 700, y: 20 },
+            velocityMax: 200
+          })
+        );
+      }
+    }
 
     creatures.push(hero);
   }, 200);
