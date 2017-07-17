@@ -15,7 +15,6 @@ class Creature {
     }
 
     // Physics
-    game.physics.arcade.enableBody(this.sprite);
     //this.sprite.body.collideWorldBounds = true; // I'm _very_ not convinced the AoE is right on load
     physicalGroup.add(this.sprite);
 
@@ -32,8 +31,9 @@ class Creature {
     // Bounding box
     //this.sprite.body.setSize(24, 26, 11, 7); // w, h, x, y RECTANGLE COLLISION
     // Circle collision is not supported with tile maps! so avoid it for terrain
-    this.sprite.body.setCircle(20, 0, 0); // r, x, y CIRCLE COLLISION
+    this.sprite.body.setCircle(20); // r, x, y CIRCLE COLLISION
     this.sprite.body.bounce.setTo(0.5, 0.5);
+    this.sprite.body.mass = 20;
 
     this.sprite.body.immovable = false;
 
