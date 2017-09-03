@@ -1,4 +1,4 @@
-# Trudge
+# Trudge (status: incomplete work-in-progress)
 
 🎮 An entirely undefined open world game project
 
